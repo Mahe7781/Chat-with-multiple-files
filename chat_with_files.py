@@ -2,13 +2,29 @@ import streamlit as st
 import os
 import tempfile
 import zipfile
-from langchain_community.document_loaders import PyPDFLoader, TextLoader, Docx2txtLoader, UnstructuredFileLoader
-from langchain_community.embeddings import HuggingFaceEmbeddings
+
+from langchain_community.document_loaders import (
+    PyPDFLoader, TextLoader, Docx2txtLoader, UnstructuredFileLoader
+)
 from langchain_community.vectorstores import FAISS
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain_groq import ChatGroq
 
+from sentence_transformers import SentenceTransformer
+from langchain_community.embeddings import HuggingFaceEmbeddings
+
+# Step 1: Download or load model
+MODEL_PATH = "my_model"
+if not os.path.exists(MODEL_PATH):
+    with st.spinner("Downloading embedding model..."):
+        model = SentenceTransformer("intfloat/e5-small")
+        model.save(MODEL_PATH)
+
+# Step 2: Load embeddings from local model
+embeddings = HuggingFaceEmbeddings(model_name=MODEL_PATH)
+
+# Streamlit UI
 st.set_page_config(page_title="🧠 Chat with Your Files", layout="wide")
 st.title("🧠 Chat with Multiple Files")
 st.markdown("Upload PDFs, DOCX, TXT, or a ZIP of files and ask questions based on their content.")
@@ -25,6 +41,7 @@ if uploaded_files:
                 with open(file_path, "wb") as f:
                     f.write(uploaded_file.getbuffer())
 
+                # Extract if ZIP
                 if uploaded_file.type == "application/zip":
                     with zipfile.ZipFile(file_path, 'r') as zip_ref:
                         zip_ref.extractall(temp_dir)
@@ -51,11 +68,10 @@ if uploaded_files:
                     else:
                         docs.extend(UnstructuredFileLoader(file_path).load())
 
-        embeddings = HuggingFaceEmbeddings(model_name="my_model")
         vectorstore = FAISS.from_documents(docs, embeddings)
 
         llm = ChatGroq(
-            api_key="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",  # Replace with your actual Groq API key
+            api_key="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",  # 🔑 Replace with your actual Groq API key
             model_name="llama3-70b-8192"
         )
 
