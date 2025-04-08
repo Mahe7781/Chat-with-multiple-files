@@ -1,0 +1,12 @@
+streamlit
+langchain
+langchain-community
+huggingface-hub
+sentence-transformers
+pypdf
+python-docx
+unstructured
+openai
+tiktoken
+faiss-cpu
+aiohttp
