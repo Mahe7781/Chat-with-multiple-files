@@ -96,17 +96,6 @@ streamlit run filename.py
 - Custom chatbot for internal data
 
 ---
-
-## 📄 `requirements.txt`
-
-```txt
-streamlit
-langchain
-langchain-community
-langchain-groq
-faiss-cpu
-sentence-transformers
-```
 ---
 ##  output
 
