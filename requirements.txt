@@ -1,32 +1,14 @@
-# 🧠 Streamlit for UI
 streamlit
-
-# 🔗 LangChain core + community integrations
 langchain
 langchain-community
-
-# 🤖 Groq API for LLM
 langchain-groq
-
-# 🧠 Sentence embeddings (MiniLM)
 sentence-transformers
 huggingface-hub
-
-# 📁 Document parsing
+faiss-cpu
 pypdf
 python-docx
 unstructured
-
-# 🔍 Vector store
-faiss-cpu
-
-# 🔐 Token handling + OpenAI compat
 openai
 tiktoken
-
-# 🌐 Async I/O (for LangChain internals)
 aiohttp
-
-# 🧠 Torch backend (used by HuggingFace)
-torch==2.0.1
-
+torch
