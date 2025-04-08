@@ -51,7 +51,7 @@ if uploaded_files:
                     else:
                         docs.extend(UnstructuredFileLoader(file_path).load())
 
-        embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+        embeddings = HuggingFaceEmbeddings(model_name="my_model")
         vectorstore = FAISS.from_documents(docs, embeddings)
 
         llm = ChatGroq(
